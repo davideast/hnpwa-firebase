@@ -1,0 +1,5 @@
+node_modules
+functions/node_modules
+functions/index.html
+public
+.DS_STORE

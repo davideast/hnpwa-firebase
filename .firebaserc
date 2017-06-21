@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "alwaysbecaching",
+    "prod": "hnpwa-firebase"
+  }
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#ffa100">
+    <title>HNPWA Starter</title>
+
+    <style media="screen">
+      /* Base */      
+      * { box-sizing: border-box; }
+      p,h1,h2,h3,h4,h5 { padding: 0; margin: 0; }
+
+      body { 
+          border-top: 16px solid #ffa100;
+          color: rgba(0,0,0,0.87); 
+          font-family: Roboto, Helvetica, Arial, sans-serif; 
+          font-size: calc(15px + 7 * ((100vw - 500px) / 900));
+          margin: 0; 
+          padding: 0; 
+      }
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Layout */
+      .hn-layoutcontainer {
+          margin: 0 auto;
+          min-width: 320px;
+          padding: 0 2rem;
+      }
+
+      /* Header module */
+      .hn-navbar {
+          display: flex;
+          justify-content: space-between;
+          padding: 20px 0px;
+      }
+
+      .hn-headericon {
+          padding-right: 30px;
+      }
+
+      .hn-navlist {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+      }
+
+      .hn-navlist li a {
+          color: rgba(0, 0, 0, 0.63);
+          font-size: 1.2rem;
+          text-decoration: none;
+      }
+
+      .hn-navlist li a:hover {
+          text-decoration: underline;
+      }
+
+      .hn-story {
+          border-bottom: 1px solid rgba(239, 239, 239, .8);        
+          display: flex;
+          padding: 1rem 0;
+      }
+
+      .hn-storyrank {
+          padding: 15px;
+          width: 60px;
+      }
+
+      .hn-storyrank .hn-h2 {
+          color: rgba(0, 0, 0, 0.63);
+      }
+
+      .hn-storydetails {
+          align-items: flex-start;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          width: 100%;
+      }
+
+      .hn-storydetails .hn-h4 {
+          font-weight: 400;
+          padding: 4px 0;
+      }
+
+      .hn-storydetails .hn-h4 a {
+        color: rgba(0, 0, 0, 0.87);
+        text-decoration: none;
+      }
+
+      .hn-storymeta {
+          font-size: 0.7rem;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="hn-layoutcontainer">
+
+      <nav class="hn-navbar">
+        <div class="hn-headericon">
+          <img src="/images/firebase-logo-64.png">
+        </div>
+
+        <ul class="hn-navlist">
+          <li>
+            <a href="/news">NEWS</a>
+          </li>
+          <li>
+            <a href="/ask">ASK</a>
+          </li>
+          <li>
+            <a href="/show">SHOW</a>
+          </li>
+          <li>
+            <a href="/jobs">JOBS</a>
+          </li>
+        </ul>
+      </nav>
+
+      <main class="hn-storylist">
+
+        <!-- ::STORIES:: -->
+
+      </main>
+
+    </div>
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        function attachOnUpdateFound(registration, versionChangeCallback, offlineReadyCallback) {
+          registration.onupdatefound = function () {
+            var installingWorker = registration.installing;
+            installingWorker.onstatechange = function () {
+              if (installingWorker.state === 'installed') {
+                if (navigator.serviceWorker.controller) {
+                  versionChangeCallback();
+                } else {
+                  offlineReadyCallback();
+                }
+              }
+            };
+          };
+        }        
+        navigator.serviceWorker.register('/sw.main.js').then(function(reg) {
+          attachOnUpdateFound(reg, function versionChanged() {
+            console.log('new version!');
+          }, function offlineReady() {
+            console.log('offline ready');
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

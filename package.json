@@ -1,0 +1,21 @@
+{
+  "name": "hnpwa-starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "fs-extra": "^3.0.1",
+    "lighthouse": "^2.1.0",
+    "workbox-build": "^1.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:sw": "node build/sw.build.js",
+    "build": "cp -R src/ ./public && mv ./public/index.html functions/ && npm run build:sw",
+    "serve": "firebase serve --only functions,hosting"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
