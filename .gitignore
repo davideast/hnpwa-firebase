@@ -3,3 +3,4 @@ functions/node_modules
 functions/index.html
 public
 .DS_STORE
+src/workbox-sw.**
