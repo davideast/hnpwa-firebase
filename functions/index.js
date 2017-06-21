@@ -63,4 +63,3 @@ app.get('*', (req, res) => {
  * Export express app to Cloud Functions
  */
 exports.app = functions.https.onRequest(app);
-
