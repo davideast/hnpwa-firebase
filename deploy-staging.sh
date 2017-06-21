@@ -10,4 +10,4 @@ if [ "${TRAVIS_TEST_RESULT}" = "1" ]; then
   exit
 fi
 
-./node_modules/.bin/firebase deploy --token --project hnpwa-firebase-staging
+./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN" --project hnpwa-firebase-staging
