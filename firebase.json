@@ -6,7 +6,7 @@
       "function": "app"
     }],
     "headers": [{
-      "source": "/sw.js",
+      "source": "/sw.main.js",
       "headers": [{
         "key": "Cache-Control",
         "value": "no-cache"
