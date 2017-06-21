@@ -8,7 +8,10 @@
     "lighthouse": "^2.1.0",
     "workbox-build": "^1.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "firebase-tools": "^3.9.1",
+    "lighthouse-ci": "https://github.com/ebidel/lighthouse-ci"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:sw": "node build/sw.build.js",
