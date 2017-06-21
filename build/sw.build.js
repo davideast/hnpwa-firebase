@@ -1,22 +1,15 @@
 const workbox = require('workbox-build');
 
-function buildSW() {
+function buildSW(matchers) {
   return workbox.injectManifest({
-    globDirectory: './src/',
-    globPatterns: ['**\/*.{html,js,css,png,jpg}'],
-    globIgnores: ['sw.main.js','404.html', 'images/icons/**/*'],
+    globDirectory: './src',
+    globPatterns: ['**\/*.{html,js,css,png,jpg,json}'],
+    globIgnores: ['sw.main.js','404.html', 'images/icons/**/*', 'index.html'],
     swSrc: './build/sw.main.js',
     swDest: './public/sw.main.js',
-    templatedUrls: {
-      '/': ['index.html'],
-      '/news': ['index.html'],
-      '/ask': ['index.html'],
-      '/show': ['index.html'],
-      '/jobs': ['index.html'],
-    },
   });
 }
 
 buildSW()
-  .then(() => console.log('created public/sw.main.js'))
-  .catch(console.log);
+  .then(() => console.log('Created /public/sw.main.js'))
+  .catch((e) => console.log(e));

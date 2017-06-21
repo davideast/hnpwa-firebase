@@ -50,7 +50,7 @@ app.get('*', (req, res) => {
     request(`${API_BASE}/${topic}.json`).then(storiesJson => {
       const stories = JSON.parse(storiesJson);
       const storyHtml = stories.map(storyTemplate).join('');
-      const index = fs.readFileSync('./index.html', 'utf8');
+      const index = fs.readFileSync(__dirname + '/index.html', 'utf8');
       const replaced = index.replace('<!-- ::STORIES:: -->', storyHtml);
       res.send(replaced);
     });
@@ -63,4 +63,3 @@ app.get('*', (req, res) => {
  * Export express app to Cloud Functions
  */
 exports.app = functions.https.onRequest(app);
-

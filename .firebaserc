@@ -1,6 +1,7 @@
 {
   "projects": {
     "default": "alwaysbecaching",
-    "prod": "hnpwa-firebase"
+    "prod": "hnpwa-firebase",
+    "staging": "hnpwa-firebase-staging"
   }
 }

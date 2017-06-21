@@ -13,8 +13,9 @@
     "lighthouse-ci": "https://github.com/ebidel/lighthouse-ci"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build:sw": "node build/sw.build.js",
+    "test": "echo \"No test specified\" && exit 0",
+    "copy:workbox": "cp node_modules/workbox-sw/build/importScripts/* src/",
+    "build:sw": "npm run copy:workbox && node build/sw.build.js",
     "build": "cp -R src/ ./public && mv ./public/index.html functions/ && npm run build:sw",
     "serve": "firebase serve --only functions,hosting"
   },
