@@ -6,7 +6,7 @@ const app = express();
 
 const API_BASE = 'https://hnpwa-api.firebaseapp.com';
 const SECTION_MATCHER = /^\/$|news|newest|show|ask|jobs/;
-const ITEM_MATCHER = /item\/(\d+$)/;
+const ITEM_MATCHER = '/item';
 
 const storyTemplate = (story, rank) => `
 <section id="${story.id}" class="hn-story">
@@ -27,6 +27,37 @@ const storyTemplate = (story, rank) => `
     </div>
   </div>
 </section>
+`;
+
+const commentTreeTemplate = `
+<div class="hn-itembyline">
+  <h2>{{title}} ({{domain}})</h2>
+  <div class="hn-itemmeta>
+    <p>
+      {{points}} by
+      <a href="/user/{{user}}>{{user}}</a>
+      {{time_ago}} | {{comments_count}} comments
+    </p>
+  </div>
+  
+  {{> commentList comments }}
+
+</div>
+`;
+
+const commentListTemplate = `
+  <div class="hn-commentlist">
+    {{#each this}}
+      <details class="hn-commentthread" open>
+        <p class="hn-comment">
+          {{{ content }}}
+        </p>
+        
+        {{> commentList comments }}
+
+      </details>
+    {{/each}}
+  </div>
 `;
 
 /**
@@ -55,6 +86,22 @@ app.get('*', (req, res) => {
       res.send(replaced);
     });
   } else if (req.path.match(ITEM_MATCHER)) {
+    let id = req.query.id;
+    if(!id) {
+      id = req.path.replace('/item/', '');
+    }
+    request(`${API_BASE}/item/${id}.json`).then(itemJson => {
+      const item = JSON.parse(itemJson);
+      const template = Handlebars.compile(commentTreeTemplate);
+      const html = template(item);
+      replaced = index.replace('<!-- ::ITEM:: -->', html);
+      res.set('Cache-Control', 'public; max-age=300, s-maxage=600');
+      res.send(replaced);         
+    });
+  } else {
+    res.set('Cache-Control', 'public; max-age=300, s-maxage=600');
+    res.send(replaced);       
+  }
 
   }
 });
