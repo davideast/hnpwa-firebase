@@ -1,6 +1,7 @@
 node_modules
 functions/node_modules
 functions/index.html
+functions/**/*.js
 public
 .DS_STORE
 src/workbox-sw.**
