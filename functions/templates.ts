@@ -30,11 +30,18 @@ export const story = `
     <h4 class="hn-h4">
       <a href="{{url}}">
       {{title}}
+      {{#if domain}}
       <span class="hn-link">({{domain}})</span>
+      {{/if}}
       </a>
     </h4>
     <div class="hn-storymeta">
-      {{points}} points by <a href="/users/{{user}}">{{user}}</a> 
+      {{#if points}}
+      {{points}} points
+      {{/if}} 
+      {{#if user}} 
+      by <a href="/users/{{user}}">{{user}}</a> 
+      {{/if}}
       {{time_ago}} |
       <a href="/item/{{id}}">{{comments_count}} comments</a>
     </div>
