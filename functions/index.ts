@@ -39,6 +39,7 @@ app.get('*', async (req, res) => {
     }).join('');
     const index = fs.readFileSync(__dirname + '/index.html', 'utf8');
     const replaced = index.replace('<!-- ::STORIES:: -->', storyHtml);
+    res.set('Cache-Control', 'public; max-age=300, s-maxage=600');
     res.send(replaced);
   } else if (req.path.match(ITEM_MATCHER)) {
     let id = req.query.id;
