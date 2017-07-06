@@ -1,6 +1,6 @@
 {
-  "name": "functions",
-  "description": "Cloud Functions for Firebase",
+  "name": "hnpwa_firebase",
+  "description": "HNPWA app on Firebase node.js hosting",
   "dependencies": {
     "@types/handlebars": "^4.0.33",
     "@types/request-promise": "^4.1.35",
@@ -9,7 +9,10 @@
     "firebase-functions": "^0.5.7",
     "handlebars": "^4.0.10",
     "request": "^2.81.0",
-    "request-promise": "^4.2.1",
+    "request-promise": "^4.2.1"
+  },
+  "devDependencies": {
+    "csso": "^3.1.1",
     "workbox-build": "^1.0.1"
   },
   "private": true

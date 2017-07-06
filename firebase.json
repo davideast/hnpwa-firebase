@@ -1,16 +1,31 @@
 {
   "hosting": {
     "public": "public",
-    "rewrites": [{
-      "source": "**",
-      "function": "app"
-    }],
-    "headers": [{
-      "source": "/sw.main.js",
-      "headers": [{
-        "key": "Cache-Control",
-        "value": "no-cache"
-      }]
-    }]
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "app"
+      }
+    ],
+    "headers": [
+      {
+        "source": "/sw.main.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "/images/firebase-logo-64.png",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=31536000"
+          }
+        ]
+      }
+    ]
   }
 }

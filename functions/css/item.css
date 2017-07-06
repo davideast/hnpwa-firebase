@@ -1,0 +1,12 @@
+.hn-commentlist .hn-commentlist {
+    margin-left: 2rem;
+}
+
+.hn-commentlist p {
+    margin-left: 2rem;
+    padding: 0.2rem;
+}
+
+.hn-commentthread {
+    padding: 0.4rem;
+}
