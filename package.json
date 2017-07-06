@@ -15,9 +15,11 @@
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "copy:workbox": "cp node_modules/workbox-sw/build/importScripts/* src/",
+    "tsc": "tsc -p functions/tsconfig.json",
+    "build:css": "npm run tsc && node functions/css/embed.js",
     "build:sw": "npm run copy:workbox && node build/sw.build.js",
-    "build": "tsc -p functions/tsconfig.json && cp -R src/ ./public && mv ./public/index.html functions/ && npm run build:sw",
-    "serve": "tsc -p functions/tsconfig.json && firebase serve --only functions,hosting"
+    "build": "npm run build:css && cp -R src/ ./public && mv ./public/index.html functions/ && npm run build:sw",
+    "serve": "npm run tsc && firebase serve --only functions,hosting"
   },
   "keywords": [],
   "author": "",

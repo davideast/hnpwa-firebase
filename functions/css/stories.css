@@ -1,0 +1,36 @@
+.hn-story {
+   border-bottom: 1px solid rgba(239, 239, 239, .8);        
+   display: flex;
+   padding: 1rem 0;
+}
+
+.hn-storyrank {
+    padding: 15px;
+    width: 60px;
+}
+
+.hn-storyrank .hn-h2 {
+    color: rgba(0, 0, 0, 0.63);
+}
+
+.hn-storydetails {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.hn-storydetails .hn-h4 {
+    font-weight: 400;
+    padding: 4px 0;
+}
+
+.hn-storydetails .hn-h4 a {
+  color: rgba(0, 0, 0, 0.87);
+  text-decoration: none;
+}
+
+.hn-storymeta {
+    font-size: 0.7rem;
+}
