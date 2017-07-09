@@ -9,16 +9,22 @@
     "workbox-build": "^1.0.1"
   },
   "devDependencies": {
+    "@types/html-minifier": "^1.1.30",
+    "@types/node": "^8.0.9",
+    "@types/uglify-js": "^2.6.29",
     "firebase-tools": "^3.9.1",
-    "lighthouse-ci": "https://github.com/ebidel/lighthouse-ci"
+    "html-minifier": "^3.5.2",
+    "lighthouse-ci": "https://github.com/ebidel/lighthouse-ci",
+    "uglify-js": "^3.0.24"
   },
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "copy:workbox": "cp node_modules/workbox-sw/build/importScripts/* src/",
-    "tsc": "tsc -p functions/tsconfig.json",
-    "build:css": "npm run tsc && node functions/css/embed.js",
+    "tsc": "tsc -p functions/tsconfig.json && tsc -p build/tsconfig.json",
+    "build:index": "node build/index.build.js",
+    "build:css": "node functions/css/embed.js",
     "build:sw": "npm run copy:workbox && node build/sw.build.js",
-    "build": "npm run build:css && cp -R src/ ./public && mv ./public/index.html functions/ && npm run build:sw",
+    "build": "npm run tsc && npm run build:index && npm run build:css && cp -R src/ ./public && npm run build:sw",
     "serve": "npm run tsc && firebase serve --only functions,hosting"
   },
   "keywords": [],
