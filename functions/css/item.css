@@ -1,12 +1,17 @@
+.hn-comment {
+    border-bottom: 1px solid rgba(239,239,239,.8);
+    padding: 1rem 0;
+}
+
 .hn-commentlist .hn-commentlist {
-    margin-left: 2rem;
+    margin-left: .5rem;
 }
 
 .hn-commentlist p {
-    margin-left: 2rem;
-    padding: 0.2rem;
+    margin-bottom: .8rem;
+    word-break: break-word;
 }
 
 .hn-commentthread {
-    padding: 0.4rem;
+    padding: .4rem;
 }
