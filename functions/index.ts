@@ -5,7 +5,9 @@ import * as request from 'request-promise';
 import * as templates from './templates';
 import * as Handlebars from 'handlebars';
 import * as embedcss from './css/embedcss';
+import * as htmlmin from 'html-minifier';
 
+const minify = htmlmin.minify;
 const app = express.Router();
 Handlebars.registerPartial('commentList', templates.commentList);
 
@@ -34,12 +36,16 @@ async function renderStories(path: string) {
   }).join('');
   // Embed CSS in HTML template
   const styledIndex = await embedcss.embedInHtml(
-    __dirname + '/index.html', 
+    __dirname + '/index.html',
     __dirname + '/css/stories.css.html'
   );
   // Dynamically render the stories in the HTML template
-  const storesIndex =  styledIndex.replace('<!-- ::STORIES:: -->', storyHtml);
-  return storesIndex;
+  const storesIndex = styledIndex.replace('<!-- ::STORIES:: -->', storyHtml);
+  return minify(storesIndex, {
+    minifyJS: true,
+    collapseWhitespace: true,
+    removeAttributeQuotes: true
+  });
 }
 
 async function renderItem(id: string) {
@@ -49,11 +55,15 @@ async function renderItem(id: string) {
   const html = template(item);
   // Embed CSS in HTML template
   const styledIndex = await embedcss.embedInHtml(
-    __dirname + '/index.html', 
+    __dirname + '/index.html',
     __dirname + '/css/item.css.html'
   );
   const itemIndex = styledIndex.replace('<!-- ::ITEM:: -->', html);
-  return itemIndex;
+  return minify(itemIndex, {
+    minifyJS: true,
+    collapseWhitespace: true,
+    removeAttributeQuotes: true
+  });
 }
 
 /**
