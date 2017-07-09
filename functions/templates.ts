@@ -32,8 +32,8 @@ export const commentTree = `
   <h2 class="hn-byline">{{title}} ({{domain}})</h2>
   <div class="hn-itemmeta">
     <p>
-      {{points}} by
-      <a href="/user/{{user}}>{{user}}</a>
+      {{points}} points by
+      <a href="/user/{{user}}">{{user}}</a>
       {{time_ago}} | {{comments_count}} comments
     </p>
   </div>
@@ -46,14 +46,21 @@ export const commentTree = `
 export const commentList = `
   <div class="hn-commentlist">
     {{#each this}}
-      <details class="hn-commentthread" open>
-        <p class="hn-comment">
-          {{{ content }}}
-        </p>
+      <div class="hn-commentthread" open>
+        <div class="hn-comment">
+          <div class="hn-commentmeta">
+            <a href="/user/{{user}}">
+              {{ user }} | {{ time_ago }}
+            </a>
+          </div>
+          <div class="hn-commentcontent">
+            {{{ content }}}
+          </div>
+        </div>
         
         {{> commentList comments }}
 
-      </details>
+      </div>
     {{/each}}
   </div>
 `;
