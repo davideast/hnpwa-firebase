@@ -1,3 +1,4 @@
+import * as uglify from 'uglify-js';
 import * as htmlmin from 'html-minifier';
 import * as utils from '../functions/utils';
 
@@ -9,16 +10,18 @@ import * as utils from '../functions/utils';
 const minify = htmlmin.minify;
 
 async function compress() {
-   const indexTemplate = await utils.readFile(__dirname + '/index.html');
-   const swregTemplate = await utils.readFile(__dirname + '/sw.reg.js');
-   const indexReplaced = indexTemplate.replace('/** ::SW_REG **/', swregTemplate);
-   const indexMin = minify(indexReplaced, {
+   const indexTemplate = await utils.readFile(process.cwd() + '/build/index.html');
+   const swregTemplate = await utils.readFile(process.cwd() + '/src/sw.reg.js');
+   const swrefMin = uglify.minify(swregTemplate).code;
+   const indexMin = minify(indexTemplate, {
       minifyJS: true,
       collapseWhitespace: true,
       removeAttributeQuotes: true
    });
-   return utils.writeFile('./functions/index.html', indexMin);
+   return Promise.all([
+      utils.writeFile('./functions/index.html', indexMin),
+      utils.writeFile('./public/sw.reg.js', swrefMin)
+   ]);
 }
 
-
-compress().then(() => console.log('Created /functions/index.html'));
+compress().then(() => console.log('Created /functions/index.html, /public/sw.reg.js'));

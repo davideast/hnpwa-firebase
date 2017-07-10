@@ -1,17 +1,17 @@
-.hn-comment {
+.hn-c {
     border-bottom: 1px solid rgba(239,239,239,.8);
     padding: 1rem 0;
 }
 
-.hn-commentlist .hn-commentlist {
+.hn-cl .hn-cl {
     margin-left: .5rem;
 }
 
-.hn-commentlist p {
+.hn-cl p {
     margin-bottom: .8rem;
     word-break: break-word;
 }
 
-.hn-commentthread {
+.hn-ct {
     padding: .4rem;
 }
