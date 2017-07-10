@@ -4,11 +4,15 @@
     "module": "commonjs",                     /* Specify module code generation: 'commonjs', 'amd', 'system', 'umd' or 'es2015'. */      
     "strict": true,                            /* Enable all strict type-checking options. */
     "typeRoots": [
-      "../node_modules/@types"
+      "../../node_modules/@types"
     ],
     "lib": [
       "es2015"
     ],
-    "moduleResolution": "node"
-  }
+    "moduleResolution": "node",
+    "outDir": "../../dist/build"
+  },
+  "files": [
+    "build.ts"
+  ]
 }

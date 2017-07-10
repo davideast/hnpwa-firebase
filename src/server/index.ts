@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as request from 'request-promise';
 import * as templates from './templates';
 import * as Handlebars from 'handlebars';
-import * as embedcss from './css/embedcss';
+import * as embedcss from './embedcss';
 import * as htmlmin from 'html-minifier';
 
 const minify = htmlmin.minify;
@@ -37,7 +37,7 @@ async function renderStories(path: string) {
   // Embed CSS in HTML template
   const styledIndex = await embedcss.embedInHtml(
     __dirname + '/index.html',
-    __dirname + '/css/stories.css.html'
+    __dirname + '/stories.css.html'
   );
   // Dynamically render the stories in the HTML template
   const storesIndex = styledIndex.replace('<!-- ::STORIES:: -->', storyHtml);
@@ -56,7 +56,7 @@ async function renderItem(id: string) {
   // Embed CSS in HTML template
   const styledIndex = await embedcss.embedInHtml(
     __dirname + '/index.html',
-    __dirname + '/css/item.css.html'
+    __dirname + '/item.css.html'
   );
   const itemIndex = styledIndex.replace('<!-- ::ITEM:: -->', html);
   return minify(itemIndex, {
