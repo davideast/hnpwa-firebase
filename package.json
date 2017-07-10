@@ -21,10 +21,7 @@
     "test": "echo \"No test specified\" && exit 0",
     "copy:workbox": "cp node_modules/workbox-sw/build/importScripts/* src/",
     "tsc": "tsc -p functions/tsconfig.json && tsc -p build/tsconfig.json",
-    "build:index": "node build/index.build.js",
-    "build:css": "node functions/css/embed.js",
-    "build:sw": "npm run copy:workbox && node build/sw.build.js",
-    "build": "npm run tsc && cp -R src/ ./public && rm public/sw.reg.js && npm run build:index && npm run build:css && npm run build:sw",
+    "build": "npm run tsc && node build/build.js",
     "serve": "npm run tsc && firebase serve --only functions,hosting"
   },
   "keywords": [],
