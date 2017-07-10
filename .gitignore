@@ -1,10 +1,5 @@
 node_modules
-functions/node_modules
-functions/index.html
-functions/**/*.js
-functions/css/**/*.css.html
-public
 .DS_STORE
-src/workbox-sw.**
 npm-debug.log
+dist
 

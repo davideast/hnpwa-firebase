@@ -28,18 +28,16 @@ export const story = `
 `;
 
 export const commentTree = `
-<div class="hn-commenttree">
-  <h2 class="hn-byline">{{title}} ({{domain}})</h2>
-  <div class="hn-itemmeta">
+<div>
+  <h2>{{title}} ({{domain}})</h2>
+  <div>
     <p>
       {{points}} points by
       <a href="/user/{{user}}">{{user}}</a>
       {{time_ago}} | {{comments_count}} comments
     </p>
   </div>
-  
   {{> commentList comments }}
-
 </div>
 `;
 

@@ -2,7 +2,15 @@ language: node_js
 node_js:
   - 6
 install:
-  - npm install # make sure to install the deps when Travis runs.
+  - npm install 
+  - npm run build
+  - npm run fns:deps
 after_success:
   - node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN" --project hnpwa-firebase-staging
+  - curl https://hnpwa-firebase-staging.firebaseapp.com
   - node node_modules/lighthouse-ci/runlighthouse.js https://hnpwa-firebase-staging.firebaseapp.com
+deploy:
+  provider: firebase
+  skip_cleanup: true
+  token:
+    secure: "$FIREBASE_TOKEN"
