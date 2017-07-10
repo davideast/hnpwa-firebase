@@ -1,19 +1,19 @@
 
 export const story = `
-<section id="{{id}}" class="hn-story">
-  <div class="hn-storyrank">
-    <h2 class="hn-h2">{{rank}}</h2>
+<section>
+  <div class="hn-sr">
+    <h2>{{rank}}</h2>
   </div>
-  <div class="hn-storydetails">
-    <h4 class="hn-h4">
+  <div class="hn-sd">
+    <h4>
       <a href="{{url}}">
       {{title}}
       {{#if domain}}
-      <span class="hn-link">({{domain}})</span>
+      <span>({{domain}})</span>
       {{/if}}
       </a>
     </h4>
-    <div class="hn-storymeta">
+    <div class="hn-sm">
       {{#if points}}
       {{points}} points
       {{/if}} 
@@ -44,16 +44,16 @@ export const commentTree = `
 `;
 
 export const commentList = `
-  <div class="hn-commentlist">
+  <div class="hn-cl">
     {{#each this}}
-      <div class="hn-commentthread" open>
-        <div class="hn-comment">
-          <div class="hn-commentmeta">
+      <div class="hn-ct">
+        <div class="hn-c">
+          <div>
             <a href="/user/{{user}}">
               {{ user }} | {{ time_ago }}
             </a>
           </div>
-          <div class="hn-commentcontent">
+          <div>
             {{{ content }}}
           </div>
         </div>

@@ -22,42 +22,42 @@ ul {
 }
 
 /* Layout */
-.hn-layoutcontainer {
+.hn-lc {
     margin: 0 auto;
     min-width: 320px;
     padding: 0 2rem;
 }
 
 /* Header module */
-.hn-navbar {
+.hn-nb {
     display: flex;
     justify-content: space-between;
     padding: 20px 0px;
 }
 
-.hn-headericon {
+.hn-hi {
     padding-right: 30px;
 }
 
-.hn-navlist {
+.hn-nl {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
 
-.hn-navlist li a {
+.hn-nl li a {
     color: rgba(0, 0, 0, 0.63);
     font-size: 1.2rem;
     text-decoration: none;
 }
 
-.hn-navlist li a:hover {
+.hn-nl li a:hover {
     text-decoration: underline;
 }
     
 @media(max-width: 380px) {
-   .hn-navlist li a {
+   .hn-nl li a {
       font-size: 1rem;
    }
 }

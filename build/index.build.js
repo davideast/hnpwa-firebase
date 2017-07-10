@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const uglify = require("uglify-js");
 const htmlmin = require("html-minifier");
 const utils = require("../functions/utils");
 /**
@@ -17,15 +18,18 @@ const utils = require("../functions/utils");
 const minify = htmlmin.minify;
 function compress() {
     return __awaiter(this, void 0, void 0, function* () {
-        const indexTemplate = yield utils.readFile(__dirname + '/index.html');
-        const swregTemplate = yield utils.readFile(__dirname + '/sw.reg.js');
-        const indexReplaced = indexTemplate.replace('/** ::SW_REG **/', swregTemplate);
-        const indexMin = minify(indexReplaced, {
+        const indexTemplate = yield utils.readFile(process.cwd() + '/build/index.html');
+        const swregTemplate = yield utils.readFile(process.cwd() + '/src/sw.reg.js');
+        const swrefMin = uglify.minify(swregTemplate).code;
+        const indexMin = minify(indexTemplate, {
             minifyJS: true,
             collapseWhitespace: true,
             removeAttributeQuotes: true
         });
-        return utils.writeFile('./functions/index.html', indexMin);
+        return Promise.all([
+            utils.writeFile('./functions/index.html', indexMin),
+            utils.writeFile('./public/sw.reg.js', swrefMin)
+        ]);
     });
 }
-compress().then(() => console.log('Created /functions/index.html'));
+compress().then(() => console.log('Created /functions/index.html, /public/sw.reg.js'));

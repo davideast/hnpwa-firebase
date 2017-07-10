@@ -74,7 +74,7 @@ async function renderItem(id: string) {
 app.get('*', async (req, res) => {
   if (req.path.match(SECTION_MATCHER)) {
     const storiesHtml = await renderStories(req.path);
-    res.set('Cache-Control', 'public; max-age=300, s-maxage=600');
+    res.set('Cache-Control', 'public; max-age=300, s-maxage=600, stale-while-revalidate=400');
     res.send(storiesHtml);
   } else if (req.path.match(ITEM_MATCHER)) {
     let id = req.query.id;
@@ -82,7 +82,7 @@ app.get('*', async (req, res) => {
       id = req.path.replace('/item/', '');
     }
     const itemHtml = await renderItem(id);
-    res.set('Cache-Control', 'public; max-age=300, s-maxage=600');
+    res.set('Cache-Control', 'public; max-age=300, s-maxage=600, stale-while-revalidate=400');
     res.send(itemHtml);
   }
 });

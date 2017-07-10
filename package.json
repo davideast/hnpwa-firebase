@@ -24,7 +24,7 @@
     "build:index": "node build/index.build.js",
     "build:css": "node functions/css/embed.js",
     "build:sw": "npm run copy:workbox && node build/sw.build.js",
-    "build": "npm run tsc && npm run build:index && npm run build:css && cp -R src/ ./public && npm run build:sw",
+    "build": "npm run tsc && cp -R src/ ./public && rm public/sw.reg.js && npm run build:index && npm run build:css && npm run build:sw",
     "serve": "npm run tsc && firebase serve --only functions,hosting"
   },
   "keywords": [],

@@ -1,19 +1,19 @@
-.hn-story {
+.hn-sl > section {
    border-bottom: 1px solid rgba(239, 239, 239, .8);        
    display: flex;
    padding: 1rem 0;
 }
 
-.hn-storyrank {
+.hn-sr {
     padding: 15px;
     width: 60px;
 }
 
-.hn-storyrank .hn-h2 {
+.hn-sr h2 {
     color: rgba(0, 0, 0, 0.63);
 }
 
-.hn-storydetails {
+.hn-sd {
     align-items: flex-start;
     display: flex;
     flex-direction: column;
@@ -21,16 +21,16 @@
     width: 100%;
 }
 
-.hn-storydetails .hn-h4 {
+.hn-sd h4 {
     font-weight: 400;
     padding: 4px 0;
 }
 
-.hn-storydetails .hn-h4 a {
+.hn-sd h4 a {
   color: rgba(0, 0, 0, 0.87);
   text-decoration: none;
 }
 
-.hn-storymeta {
+.hn-sm {
     font-size: 0.7rem;
 }
