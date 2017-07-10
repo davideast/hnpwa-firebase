@@ -6,7 +6,7 @@ install:
   - npm run build
   - npm run fns:deps
 after_success:
-  - node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN" --project hnpwa-firebase-staging
+  - node_modules/.bin/firebase deploy --non-interactive --token "$FIREBASE_TOKEN" --project hnpwa-firebase-staging
   - curl https://hnpwa-firebase-staging.firebaseapp.com
   - node node_modules/lighthouse-ci/runlighthouse.js https://hnpwa-firebase-staging.firebaseapp.com
 deploy:
