@@ -6,7 +6,15 @@
     "public": "dist/public",
     "rewrites": [
       {
-        "source": "**",
+        "source": "/@(news|newest|show|ask|jobs)",
+        "function": "app"
+      },
+      {
+        "source": "/",
+        "function": "app"
+      },
+      {
+        "source": "/item/*",
         "function": "app"
       }
     ],
