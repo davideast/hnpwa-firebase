@@ -8,12 +8,12 @@ import * as embedcss from './embedcss';
 import * as htmlmin from 'html-minifier';
 
 const minify = htmlmin.minify;
-const app = express.Router();
+export const app = express.Router();
 Handlebars.registerPartial('commentList', templates.commentList);
 
-const API_BASE = 'https://hnpwa-api.firebaseapp.com';
+const API_BASE = 'https://hnpwa.com/api/v0';
 const SECTION_MATCHER = /^\/$|news|newest|show|ask|jobs/;
-const ITEM_MATCHER = '/item';
+const ITEM_MATCHER = /item\/(\d+$)/;;
 
 /**
  * Looks at a string path and returns the matching result.
@@ -25,6 +25,9 @@ function topicLookup(path: string) {
   return `${path.match(SECTION_MATCHER)![0]}`
 }
 
+/**
+ * Create an entire section based on it's topic name
+ */
 async function renderStories(path: string) {
   const topic = topicLookup(path);
   const storiesJson = await request(`${API_BASE}/${topic}.json`);
@@ -48,6 +51,9 @@ async function renderStories(path: string) {
   });
 }
 
+/**
+ * Create a single item based on it's id
+ */
 async function renderItem(id: string) {
   const itemJson = await request(`${API_BASE}/item/${id}.json`)
   const item = JSON.parse(itemJson);
@@ -67,24 +73,40 @@ async function renderItem(id: string) {
 }
 
 /**
- * Route matcher for all routes. Proxies to hnpwa-api for JSON
- * data and then renders to index.html if it matches 
- * /news/newest/ask/show/jobs, otherwise will render to item.html.
+ * Set the Cache-Control header as middleware so we don't have to set it for each and
+ * every route. 
  */
-app.get('*', async (req, res) => {
-  if (req.path.match(SECTION_MATCHER)) {
-    const storiesHtml = await renderStories(req.path);
-    res.set('Cache-Control', 'public; max-age=300, s-maxage=600, stale-while-revalidate=400');
-    res.send(storiesHtml);
-  } else if (req.path.match(ITEM_MATCHER)) {
-    let id = req.query.id;
-    if (!id) {
-      id = req.path.replace('/item/', '');
-    }
-    const itemHtml = await renderItem(id);
-    res.set('Cache-Control', 'public; max-age=300, s-maxage=600, stale-while-revalidate=400');
-    res.send(itemHtml);
-  }
+function cacheControl(req: express.Request, res: express.Response, next: Function) {
+  res.set('Cache-Control', 'public; max-age=300, s-maxage=600, stale-while-revalidate=400');
+  next();
+}
+
+app.use(cacheControl);
+
+/**
+ * Handle main routes like 'news', 'ask', 'show', 'jobs', etc...
+ */
+app.get(SECTION_MATCHER, async (req, res) => {
+  const storiesHtml = await renderStories(req.path);
+  res.send(storiesHtml);
+});
+
+/**
+ * Handle id query param (/item?id=1)
+ */
+app.get('/item', async(req, res) => {
+  let id = req.query.id;
+  const itemHtml = await renderItem(id);
+  res.send(itemHtml);
+});
+
+/**
+ * Handle clean routes (/item/1)
+ */
+app.get(ITEM_MATCHER, async (req, res) => {
+  const id = req.path.replace('/item/', '');
+  const itemHtml = await renderItem(id);
+  res.send(itemHtml);
 });
 
 /**
