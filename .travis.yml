@@ -3,7 +3,7 @@ node_js:
   - 6
 install:
   - npm install 
-  - npm run build
+  - npm run build:prod
   - npm run fns:deps
 after_success:
   - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./src/build/deploy_staging.sh; fi'
