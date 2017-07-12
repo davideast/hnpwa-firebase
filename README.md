@@ -7,7 +7,7 @@
 </p>
 <p align="center">
 <a href="https://hnpwa-firebase.firebaseapp.com">
-<img width="384" height="824" src="https://raw.githubusercontent.com/davideast/hnpwa-firebase/master/hnpwa-firebase.png">
+<img width="284" height="524" src="https://raw.githubusercontent.com/davideast/hnpwa-firebase/master/hnpwa-firebase.png">
 </a>
 </p>
 
