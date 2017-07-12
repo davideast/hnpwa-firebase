@@ -55,13 +55,6 @@ ul {
 .hn-nl li a:hover {
     text-decoration: underline;
 }
-
-.hn-p {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 1.1rem;
-}
     
 @media(max-width: 380px) {
    .hn-nl li a {

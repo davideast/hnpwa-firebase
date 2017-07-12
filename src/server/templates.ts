@@ -31,7 +31,7 @@ export const commentTree = `
 <div>
   <h2>{{title}} ({{domain}})</h2>
   <div>
-    <p>
+    <p class="hn-fl">
       {{points}} points by
       <a href="/user/{{user}}">{{user}}</a>
       {{time_ago}} | {{comments_count}} comments
@@ -68,7 +68,7 @@ export const pager = `
   {{#if nextPositive}}
   <a href="/{{topic}}?page={{back}}">back</a>
   {{else}}
-  <a href="#"></a>
+  <div></div>
   {{/if}}
   <a href="/{{topic}}?page={{next}}">next</a>
 </div>
