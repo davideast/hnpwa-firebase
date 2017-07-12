@@ -28,8 +28,9 @@ function topicLookup(path: string) {
 /**
  * Create an entire section based on it's topic name
  */
-async function renderStories(path: string, page = "0") {
+async function renderStories(path: string, page = "1") {
   const topic = topicLookup(path);
+  const pageInt = parseInt(page, 10);
   let storiesJson;
   if(path === '/') {
     storiesJson = await request(`${API_BASE}/news.json`);
@@ -38,6 +39,7 @@ async function renderStories(path: string, page = "0") {
   }
   const stories = JSON.parse(storiesJson);
   const template = Handlebars.compile(templates.story);
+  const pagerTemplate = Handlebars.compile(templates.pager);
   const storyHtml = stories.map((story: any, i: number) => {
     // handle story rank in template
     return template({ rank: i + 1, ...story });
@@ -49,7 +51,12 @@ async function renderStories(path: string, page = "0") {
   );
   // Dynamically render the stories in the HTML template
   const storesIndex = styledIndex.replace('<!-- ::STORIES:: -->', storyHtml);
-  return minify(storesIndex, {
+  const back = pageInt - 1;
+  const next = pageInt + 1
+  const nextPositive = back > 0;
+  const pageHtml = pagerTemplate({ topic, next, back, nextPositive });
+  const allIndex = storesIndex.replace('<!-- ::PAGER:: -->', pageHtml);
+  return minify(allIndex, {
     minifyJS: true,
     collapseWhitespace: true,
     removeAttributeQuotes: true
@@ -95,7 +102,7 @@ app.use(cacheControl);
 app.get(SECTION_MATCHER, async (req, res) => {
   let page = req.query.page;
   if(!page) {
-    page = "0";
+    page = "1";
   }
   const storiesHtml = await renderStories(req.path, page);
   res.send(storiesHtml);
