@@ -1,14 +1,24 @@
+.hn-i h2 {
+    padding: 1rem 0;
+}
+
+.hn-fl {
+    font-weight: lighter;
+}
+
 .hn-c {
     border-bottom: 1px solid rgba(239, 239, 239, .8);
-    padding: 1rem 0
+    padding: 1rem 0;
+    font-size: 1rem;
 }
 .hn-cl .hn-cl {
     margin-left: .5rem
 }
 .hn-cl p {
     margin-bottom: .8rem;
-    word-break: break-word
+    word-break: break-word;
 }
 .hn-ct {
     padding: .4rem
 }
+
