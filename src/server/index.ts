@@ -16,6 +16,18 @@ const SECTION_MATCHER = /^\/$|news|newest|show|ask|jobs/;
 const ITEM_MATCHER = /item\/(\d+$)/;;
 
 /**
+ * Map the max amount of pages per route, this makes a look up
+ * super easy when rendering the template.
+ */
+const MAX_PAGES: { [key: string]: number } = {
+  "news": 10,
+  "jobs": 1,
+  "ask": 3,
+  "show": 2,
+  "/": 10
+};
+
+/**
  * Looks at a string path and returns the matching result.
  */
 function topicLookup(path: string) {
@@ -54,7 +66,10 @@ async function renderStories(path: string, page = "1") {
   const back = pageInt - 1;
   const next = pageInt + 1
   const nextPositive = back > 0;
-  const pageHtml = pagerTemplate({ topic, next, back, nextPositive });
+  const max = MAX_PAGES[topic];
+  const current = `${page}/${max}`;
+  const maxedOut = pageInt < MAX_PAGES[topic];
+  const pageHtml = pagerTemplate({ topic, next, back, nextPositive, current, maxedOut });
   const allIndex = storesIndex.replace('<!-- ::PAGER:: -->', pageHtml);
   return minify(allIndex, {
     minifyJS: true,

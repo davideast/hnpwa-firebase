@@ -70,6 +70,11 @@ export const pager = `
   {{else}}
   <div></div>
   {{/if}}
+  <div>{{current}}</div>
+  {{#if maxedOut}}
   <a href="/{{topic}}?page={{next}}">next</a>
+  {{else}}
+  <div></div>
+  {{/if}}  
 </div>
 `;
