@@ -3,7 +3,12 @@
   <p align="center">A Dynamic, CDN Cached, HNPWA implementation on Firebase Dynamic Hosting.</p>
 </p>
 <p align="center">
+  <a align="center" href="https://hnpwa-firebase.firebaseapp.com"><h3 align="center">Demo</h3></a>
+</p>
+<p align="center">
+<a href="https://hnpwa-firebase.firebaseapp.com">
 <img width="384" height="824" src="https://raw.githubusercontent.com/davideast/hnpwa-firebase/master/hnpwa-firebase.png">
+</a>
 </p>
 
 ## Highlights
