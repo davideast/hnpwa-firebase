@@ -1,7 +1,9 @@
 <p align="center">
-  <h1>HNPWA Firebase</h1>
+  <h1 align="center">HNPWA Firebase</h1>
   <p align="center">A Dynamic, CDN Cached, HNPWA implementation on Firebase Dynamic Hosting.</p>
-  <img src="https://raw.githubusercontent.com/davideast/hnpwa-firebase/hnpwa-firebase.png">
+</p>
+<p align="center">
+<img width="384" height="824" src="https://raw.githubusercontent.com/davideast/hnpwa-firebase/master/hnpwa-firebase.png">
 </p>
 
 ## Highlights
