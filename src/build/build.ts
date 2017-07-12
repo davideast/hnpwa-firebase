@@ -91,8 +91,7 @@ async function createMinifiedSWRegistration() {
  */
 async function createCompressedIndex() {
    const indexFile = fs.readFileSync(process.cwd() + '/src/build/index.html', 'utf8');
-   const indexAnalytics = embedAnalytics(indexFile);
-   const data = minify(indexAnalytics, {
+   const data = minify(indexFile, {
       minifyJS: true,
       collapseWhitespace: true,
       removeAttributeQuotes: true
@@ -121,20 +120,6 @@ async function generateStyles() {
     { path: process.cwd() + '/dist/functions/stories.css.html', data: storiesStyleTag },
     { path: process.cwd() + '/dist/functions/item.css.html', data: itemStyleTag },
   ];
-}
-
-/**
- * Embed Google Analytics build only if prod flag is enabled
- */
-function embedAnalytics(html: string, flags = process.argv) {
-  const prodFlag = flags.find(flag => flag === 'prod');
-  const isProd = prodFlag !== undefined;
-  if(isProd) {
-    const data = fs.readFileSync(process.cwd() + '/src/build/analytics.html', 'utf8');
-    html = html.replace('<!-- ::GA:: -->', data);
-    console.log('Embedding Google Anayltics.');
-  }
-  return html;
 }
 
 /**
