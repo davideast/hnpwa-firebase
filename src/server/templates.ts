@@ -62,3 +62,14 @@ export const commentList = `
     {{/each}}
   </div>
 `;
+
+export const pager = `
+<div class="hn-p">
+  {{#if nextPositive}}
+  <a href="/{{topic}}?page={{back}}">back</a>
+  {{else}}
+  <a href="#"></a>
+  {{/if}}
+  <a href="/{{topic}}?page={{next}}">next</a>
+</div>
+`;
