@@ -28,9 +28,14 @@ function topicLookup(path: string) {
 /**
  * Create an entire section based on it's topic name
  */
-async function renderStories(path: string) {
+async function renderStories(path: string, page = "0") {
   const topic = topicLookup(path);
-  const storiesJson = await request(`${API_BASE}/${topic}.json`);
+  let storiesJson;
+  if(path === '/') {
+    storiesJson = await request(`${API_BASE}/news.json`);
+  } else {
+    storiesJson = await request(`${API_BASE}/${topic}.json?page=${page}`);
+  }
   const stories = JSON.parse(storiesJson);
   const template = Handlebars.compile(templates.story);
   const storyHtml = stories.map((story: any, i: number) => {
@@ -78,6 +83,7 @@ async function renderItem(id: string) {
  */
 function cacheControl(req: express.Request, res: express.Response, next: Function) {
   res.set('Cache-Control', 'public; max-age=300, s-maxage=600, stale-while-revalidate=400');
+  res.set('Link', '</sw.reg.js>;rel=preload;as=script');
   next();
 }
 
@@ -87,7 +93,11 @@ app.use(cacheControl);
  * Handle main routes like 'news', 'ask', 'show', 'jobs', etc...
  */
 app.get(SECTION_MATCHER, async (req, res) => {
-  const storiesHtml = await renderStories(req.path);
+  let page = req.query.page;
+  if(!page) {
+    page = "0";
+  }
+  const storiesHtml = await renderStories(req.path, page);
   res.send(storiesHtml);
 });
 
