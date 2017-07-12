@@ -90,7 +90,7 @@ async function renderItem(id: string) {
  */
 function cacheControl(req: express.Request, res: express.Response, next: Function) {
   res.set('Cache-Control', 'public; max-age=300, s-maxage=600, stale-while-revalidate=400');
-  res.set('Link', '</sw.reg.js>;rel=preload;as=script');
+  res.set('Link', '</sw.reg.js>;rel=preload;as=script,</images/firebase-logo-64.png>;rel=preload;as=image');
   next();
 }
 
