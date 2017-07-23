@@ -49,9 +49,11 @@ async function copyServer() {
  */
 async function copyWorkbox() {
   const cwd = process.cwd();
-  const readPath = `${cwd}/node_modules/workbox-sw/build/importScripts/workbox-sw.prod.v1.0.1.js`;
+  const pkgPath = `${cwd}/node_modules/workbox-sw/package.json`;
+  const pkg = require(pkgPath);
+  const readPath = `${cwd}/node_modules/workbox-sw/${pkg.main}`;
   const data = fs.readFileSync(readPath, 'utf8');
-  const path = `${cwd}/dist/public/workbox-sw.prod.v1.0.1.js`;
+  const path = `${cwd}/dist/public/workbox-sw.prod.js`;
   return [{ data, path }];
 }
 
