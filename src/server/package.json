@@ -8,6 +8,7 @@
     "express": "^4.15.3",
     "firebase-admin": "~4.2.1",
     "firebase-functions": "^0.5.7",
+    "fs-extra": "^4.0.0",
     "handlebars": "^4.0.10",
     "html-minifier": "^3.5.2",
     "request": "^2.81.0",

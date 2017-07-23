@@ -24,5 +24,7 @@
 https://github.com/davideast/hnpwa-firebase.git
 npm i
 npm run build
+./node_modules/.bin/firebase login # if not already
+./node_modules/.bin/firebase use -add <your-test-project>
 npm run serve
 ```

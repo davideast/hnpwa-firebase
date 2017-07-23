@@ -11,7 +11,7 @@ export function readFile(path: string): Promise<string> {
 
 export function writeFile(path: string, data: string): Promise<any> {
   return new Promise((resolve, reject) => {
-    fs.writeFile(path, data, (err: Error, data: any) => {
+    fs.writeFile(path, data, (err: Error) => {
       if(err) { reject(err); return; }
       resolve(data);
     });
