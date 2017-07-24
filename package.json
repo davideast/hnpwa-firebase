@@ -33,12 +33,12 @@
     "tsc": "node_modules/.bin/tsc -p src/server/tsconfig.json && node_modules/.bin/tsc -p src/build/tsconfig.json",
     "tsc:watch": "node_modules/.bin/tsc -p src/server/tsconfig.json -w",
     "build:clean": "rm -rf dist",
-    "build": "npm run build:clean && npm run tsc && node dist/build/build/build.js",
+    "build": "npm run build:clean && npm run tsc && node dist/build/build.js",
     "serve": "npm run tsc && firebase serve --only functions,hosting",
-    "serve:offline": "npm run tsc && node dist/build/build/offline-server",
-    "fns:deps": "cd dist/functions && npm i",
-    "deploy": "cd dist/functions && npm i && firebase deploy --token \"$FIREBASE_TOKEN\" --project hnpwa-firebase",
-    "deploy:staging": "cd dist/functions && npm i && firebase deploy --token \"$FIREBASE_TOKEN\" --project hnpwa-firebase-staging"
+    "serve:offline": "npm run tsc && API_BASE=http://localhost:3002 node dist/build/offline-server",
+    "fns:deps": "cd dist/server && npm i",
+    "deploy": "cd dist/server && npm i && firebase deploy --token \"$FIREBASE_TOKEN\" --project hnpwa-firebase",
+    "deploy:staging": "cd dist/server && npm i && firebase deploy --token \"$FIREBASE_TOKEN\" --project hnpwa-firebase-staging"
   },
   "keywords": [],
   "author": "",

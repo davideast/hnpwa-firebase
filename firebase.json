@@ -1,9 +1,9 @@
 {
   "functions": {
-    "source": "dist/functions"
+    "source": "dist/server"
   },
   "hosting": {
-    "public": "dist/public",
+    "public": "dist/static",
     "rewrites": [
       {
         "source": "/@(news|newest|show|ask|jobs)",
