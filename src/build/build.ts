@@ -28,9 +28,8 @@ function copyDir(source: string, destination: string) {
 async function copyStatic() {
   const staticDir = process.cwd() + '/src/static';
   const publicDir = process.cwd() + '/dist/public';
-  return copyDir(staticDir, publicDir).then(() => {
-    console.log(`Copying ${staticDir} to ${publicDir}`);
-  });
+  await copyDir(staticDir, publicDir)
+  console.log(`Copying ${staticDir} to ${publicDir}`);
 }
 
 async function copyServer() {
