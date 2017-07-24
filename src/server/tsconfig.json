@@ -3,6 +3,6 @@
     "target": "es2015",
     "module": "commonjs",
     "strict": true,
-    "outDir": "../../dist/functions"
+    "outDir": "../../dist/server"
   }
 }

@@ -27,19 +27,19 @@ function copyDir(source: string, destination: string) {
  */
 async function copyStatic() {
   const staticDir = process.cwd() + '/src/static';
-  const publicDir = process.cwd() + '/dist/public';
-  await copyDir(staticDir, publicDir)
-  console.log(`Copying ${staticDir} to ${publicDir}`);
+  const distDir = process.cwd() + '/dist/static';
+  await copyDir(staticDir, distDir)
+  console.log(`Copying ${staticDir} to ${distDir}`);
 }
 
 async function copyServer() {
   const cwd = process.cwd();
   return [{
     data: fs.readFileSync(`${cwd}/src/server/package.json`, 'utf8'), 
-    path: process.cwd() + '/dist/functions/package.json',
+    path: process.cwd() + '/dist/server/package.json',
   }, {
     data: fs.readFileSync(`${cwd}/src/server/package-lock.json`, 'utf8'), 
-    path: process.cwd() + '/dist/functions/package-lock.json',    
+    path: process.cwd() + '/dist/server/package-lock.json',    
   }];
 }
 
@@ -52,7 +52,7 @@ async function copyWorkbox() {
   const pkg = require(pkgPath);
   const readPath = `${cwd}/node_modules/workbox-sw/${pkg.main}`;
   const data = fs.readFileSync(readPath, 'utf8');
-  const path = `${cwd}/dist/public/workbox-sw.prod.js`;
+  const path = `${cwd}/dist/static/workbox-sw.prod.js`;
   return [{ data, path }];
 }
 
@@ -73,7 +73,7 @@ function generateEntries() {
 async function createSW(entries: Manifest[]) {
   const swTemplate = fs.readFileSync(process.cwd() + '/src/build/sw.main.js', 'utf8');
   const data = swTemplate.replace(PRECACHE_MATCHER, JSON.stringify(entries)); 
-  const path = process.cwd() + '/dist/public/sw.main.js';
+  const path = process.cwd() + '/dist/static/sw.main.js';
   return [{ data,  path }];
 }
 
@@ -83,7 +83,7 @@ async function createSW(entries: Manifest[]) {
 async function createMinifiedSWRegistration() {
   const swregTemplate = fs.readFileSync(process.cwd() + '/src/static/sw.reg.js', 'utf8');
   const data = uglify.minify(swregTemplate).code;
-  const path = process.cwd() + '/dist/public/sw.reg.js'; 
+  const path = process.cwd() + '/dist/static/sw.reg.js'; 
   return [{ data,  path }];
 }
 
@@ -97,7 +97,7 @@ async function createCompressedIndex() {
       collapseWhitespace: true,
       removeAttributeQuotes: true
    });
-   const path = process.cwd() + '/dist/functions/index.html';
+   const path = process.cwd() + '/dist/server/index.html';
    return [{data, path }];
 }
 
@@ -118,8 +118,8 @@ async function generateStyles() {
   const storiesStyleTag = embed.style(storyCss);
   const itemStyleTag = embed.style(itemCss);
   return [
-    { path: process.cwd() + '/dist/functions/stories.css.html', data: storiesStyleTag },
-    { path: process.cwd() + '/dist/functions/item.css.html', data: itemStyleTag },
+    { path: process.cwd() + '/dist/server/stories.css.html', data: storiesStyleTag },
+    { path: process.cwd() + '/dist/server/item.css.html', data: itemStyleTag },
   ];
 }
 
@@ -132,7 +132,7 @@ async function generateStyles() {
  *  - Minify SW
  *  - Minify SW registration
  *  - Minify index.html
- *  - Generate CSS HTML tags, write to functions/css
+ *  - Generate CSS HTML tags, write to server/css
  */
 async function build() {
   await copyStatic();
