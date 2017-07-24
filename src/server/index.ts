@@ -11,9 +11,9 @@ const minify = htmlmin.minify;
 export const app = express.Router();
 Handlebars.registerPartial('commentList', templates.commentList);
 
-const API_BASE = 'https://hnpwa.com/api/v0';
+const API_BASE = process.env['API_BASE'] || 'https://hnpwa.com/api/v0';
 const SECTION_MATCHER = /^\/$|news|newest|show|ask|jobs/;
-const ITEM_MATCHER = /item\/(\d+$)/;;
+const ITEM_MATCHER = /item\/(\d+$)/;
 
 /**
  * Map the max amount of pages per route, this makes a look up
@@ -38,18 +38,35 @@ function topicLookup(path: string) {
 }
 
 /**
- * Create an entire section based on it's topic name
+ * Get stories from the API based on the required topic and page number
+ * @param opts 
  */
-async function renderStories(path: string, page = "1") {
-  const topic = topicLookup(path);
-  const pageInt = parseInt(page, 10);
+async function getStories(opts: { path: string, topic: string, page: string}) {
+  const { path, topic, page } = opts;
+  // get story data
   let storiesJson;
+  // No page lookup is required if it is the root page
   if(path === '/') {
     storiesJson = await request(`${API_BASE}/news.json`);
   } else {
     storiesJson = await request(`${API_BASE}/${topic}.json?page=${page}`);
   }
-  const stories = JSON.parse(storiesJson);
+  return JSON.parse(storiesJson);
+}
+
+function getPagerOptions(topic: string, page: string) {
+  const pageInt = parseInt(page, 10);
+  const back = pageInt - 1;
+  const next = pageInt + 1
+  const nextPositive = back > 0;
+  const max = MAX_PAGES[topic];
+  const current = `${page}/${max}`;
+  const maxedOut = pageInt < MAX_PAGES[topic];
+  return { back, next, nextPositive, max, current, maxedOut };
+}
+
+async function createStoryPage(topic: string, page: string, stories: any[]) {
+  // compile html from template
   const template = Handlebars.compile(templates.story);
   const pagerTemplate = Handlebars.compile(templates.pager);
   const storyHtml = stories.map((story: any, i: number) => {
@@ -62,15 +79,21 @@ async function renderStories(path: string, page = "1") {
     __dirname + '/stories.css.html'
   );
   // Dynamically render the stories in the HTML template
-  const storesIndex = styledIndex.replace('<!-- ::STORIES:: -->', storyHtml);
-  const back = pageInt - 1;
-  const next = pageInt + 1
-  const nextPositive = back > 0;
-  const max = MAX_PAGES[topic];
-  const current = `${page}/${max}`;
-  const maxedOut = pageInt < MAX_PAGES[topic];
+  const storiesIndex = styledIndex.replace('<!-- ::STORIES:: -->', storyHtml);  
+  const { next, back, nextPositive, current, maxedOut } = getPagerOptions(topic, page);
   const pageHtml = pagerTemplate({ topic, next, back, nextPositive, current, maxedOut });
-  const allIndex = storesIndex.replace('<!-- ::PAGER:: -->', pageHtml);
+  return storiesIndex.replace('<!-- ::PAGER:: -->', pageHtml);
+}
+
+/**
+ * Create an entire section based on it's topic name
+ */
+async function renderStories(path: string, page = "1") {
+  const topic = topicLookup(path);
+  const stories = await getStories({ path, topic, page });
+  const allIndex = await createStoryPage(topic, page, stories);
+
+  // minify html
   return minify(allIndex, {
     minifyJS: true,
     collapseWhitespace: true,
@@ -144,4 +167,4 @@ app.get(ITEM_MATCHER, async (req, res) => {
 /**
  * Export express app to Cloud Functions
  */
-exports.app = functions.https.onRequest(app as any);
+export let server = functions.https.onRequest(app as any);

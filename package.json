@@ -35,6 +35,7 @@
     "build:clean": "rm -rf dist",
     "build": "npm run build:clean && npm run tsc && node dist/build/build/build.js",
     "serve": "npm run tsc && firebase serve --only functions,hosting",
+    "serve:offline": "npm run tsc && node dist/build/build/offline-server",
     "fns:deps": "cd dist/functions && npm i",
     "deploy": "cd dist/functions && npm i && firebase deploy --token \"$FIREBASE_TOKEN\" --project hnpwa-firebase",
     "deploy:staging": "cd dist/functions && npm i && firebase deploy --token \"$FIREBASE_TOKEN\" --project hnpwa-firebase-staging"

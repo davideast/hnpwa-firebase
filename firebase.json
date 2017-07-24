@@ -7,15 +7,15 @@
     "rewrites": [
       {
         "source": "/@(news|newest|show|ask|jobs)",
-        "function": "app"
+        "function": "server"
       },
       {
         "source": "/",
-        "function": "app"
+        "function": "server"
       },
       {
         "source": "/item/*",
-        "function": "app"
+        "function": "server"
       }
     ],
     "headers": [
