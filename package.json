@@ -7,6 +7,7 @@
     "@types/handlebars": "^4.0.33",
     "@types/request-promise": "^4.1.36",
     "csso": "^3.1.1",
+    "firebase": "^4.1.4",
     "firebase-admin": "^4.2.1",
     "firebase-functions": "^0.5.9",
     "fs-extra": "^4.0.0",
@@ -20,11 +21,12 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^3.0.3",
-    "@types/ncp": "^2.0.0",
     "@types/html-minifier": "^1.1.30",
+    "@types/ncp": "^2.0.0",
     "@types/node": "^8.0.9",
     "@types/uglify-js": "^2.6.29",
     "firebase-tools": "^3.9.1",
+    "hnpwa-api": "0.0.7",
     "lighthouse": "^2.1.0",
     "lighthouse-ci": "https://github.com/ebidel/lighthouse-ci"
   },
@@ -35,7 +37,9 @@
     "build:clean": "rm -rf dist",
     "build": "npm run build:clean && npm run tsc && node dist/build/build.js",
     "serve": "npm run tsc && firebase serve --only functions,hosting",
-    "serve:offline": "npm run tsc && API_BASE=http://localhost:3002 node dist/build/offline-server",
+    "save:offline": "node_modules/.bin/hnpwa-api --save",
+    "serve:offline:api": "node_modules/.bin/hnpwa-api --serve --offline",
+    "serve:offline": "npm run tsc && API_BASE=http://localhost:3002 node dist/build/offline.server",
     "fns:deps": "cd dist/server && npm i",
     "deploy": "cd dist/server && npm i && firebase deploy --token \"$FIREBASE_TOKEN\" --project hnpwa-firebase",
     "deploy:staging": "cd dist/server && npm i && firebase deploy --token \"$FIREBASE_TOKEN\" --project hnpwa-firebase-staging"
