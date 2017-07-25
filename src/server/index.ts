@@ -41,7 +41,7 @@ function topicLookup(path: string) {
  * Get stories from the API based on the required topic and page number
  * @param opts 
  */
-async function getStories(opts: { path: string, topic: string, page: string}) {
+async function getStories(opts: { path?: string, topic: string, page: string}) {
   const { path, topic, page } = opts;
   // get story data
   let storiesJson;
@@ -65,14 +65,22 @@ function getPagerOptions(topic: string, page: string) {
   return { back, next, nextPositive, max, current, maxedOut };
 }
 
-async function createStoryPage(topic: string, page: string, stories: any[]) {
-  // compile html from template
+function createStoryFragment(topic: string, page: string, stories: any[]) {
   const template = Handlebars.compile(templates.story);
-  const pagerTemplate = Handlebars.compile(templates.pager);
-  const storyHtml = stories.map((story: any, i: number) => {
+  return stories.map((story: any, i: number) => {
     // handle story rank in template
     return template({ rank: i + 1, ...story });
   }).join('');
+}
+
+function createPagerFragment(topic: string, page: string) {
+  const pagerTemplate = Handlebars.compile(templates.pager);
+  const { next, back, nextPositive, current, maxedOut } = getPagerOptions(topic, page);
+  return pagerTemplate({ topic, next, back, nextPositive, current, maxedOut });
+}
+
+async function createStoryPage(topic: string, page: string, stories: any[]) {
+  const storyHtml = createStoryFragment(topic, page, stories);
   // Embed CSS in HTML template
   const styledIndex = await embedcss.embedInHtml(
     __dirname + '/index.html',
@@ -80,13 +88,12 @@ async function createStoryPage(topic: string, page: string, stories: any[]) {
   );
   // Dynamically render the stories in the HTML template
   const storiesIndex = styledIndex.replace('<!-- ::STORIES:: -->', storyHtml);  
-  const { next, back, nextPositive, current, maxedOut } = getPagerOptions(topic, page);
-  const pageHtml = pagerTemplate({ topic, next, back, nextPositive, current, maxedOut });
+  const pageHtml = createPagerFragment(topic, page);
   return storiesIndex.replace('<!-- ::PAGER:: -->', pageHtml);
 }
 
 /**
- * Create an entire section based on it's topic name
+ * Create an entire section based on its topic name
  */
 async function renderStories(path: string, page = "1") {
   const topic = topicLookup(path);
@@ -162,6 +169,14 @@ app.get(ITEM_MATCHER, async (req, res) => {
   const id = req.path.replace('/item/', '');
   const itemHtml = await renderItem(id);
   res.send(itemHtml);
+});
+
+app.get('/frag', async (req, res) => {
+  let topic = req.query.topic || 'news';
+  let page = req.query.page || '1';
+  const stories = await getStories({ topic, page })
+  const html = await createStoryFragment(topic, page, stories);
+  res.send(html);
 });
 
 /**
