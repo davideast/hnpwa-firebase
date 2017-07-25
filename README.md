@@ -20,11 +20,24 @@
 
 ## Contribute!?
 
-```
-https://github.com/davideast/hnpwa-firebase.git
+```bash
+git clone https://github.com/davideast/hnpwa-firebase.git
 npm i
 npm run build
-./node_modules/.bin/firebase login # if not already
-./node_modules/.bin/firebase use -add <your-test-project>
+
+# Basic serving
 npm run serve
+
+# Firebase Hosting Emulation
+node_modules/.bin/firebase login 
+# Use your own project
+node_modules/.bin/firebase use -add <your-test-proj>
+npm run serve:firebase
+
+# Offline serving A.K.A - Deving on an Airplane/bus/elevator
+npm run save:offline # save current HNAPI data set offline
+# go offline
+npm run serve:offline:api
+# open new terminal or tmux or something
+npm run serve:offline
 ```
