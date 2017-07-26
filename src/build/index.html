@@ -38,8 +38,7 @@
 
       <section class="hn-sl">
 
-        <!-- ::STORIES:: -->
-
+        
       </section>
 
       <section class="hn-i">
@@ -49,6 +48,17 @@
       </section>
 
     </div>
+    <script>
+    function p(n) {
+      var m = RegExp('[?&]' + n + '=([^&]*)').exec(window.location.search);
+      return m && decodeURIComponent(m[1].replace(/\+/g, ' '));
+    }
+    var sl = document.querySelector('.hn-sl');
+    fetch('/frag?topic=' + location.pathname.replace('/', '') + '&page=' + p('page'))
+    .then(res => res.text()).then(html => {
+      sl.innerHTML = html;
+    });
+    </script>
     <script defer src="/sw.reg.js"></script>
   </body>
 </html>

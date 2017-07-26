@@ -6,7 +6,7 @@
     "public": "dist/static",
     "rewrites": [
       {
-        "source": "/@(news|newest|show|ask|jobs)",
+        "source": "/@(news|newest|show|ask|jobs|frag)",
         "function": "server"
       },
       {

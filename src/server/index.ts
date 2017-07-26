@@ -80,16 +80,13 @@ function createPagerFragment(topic: string, page: string) {
 }
 
 async function createStoryPage(topic: string, page: string, stories: any[]) {
-  const storyHtml = createStoryFragment(topic, page, stories);
   // Embed CSS in HTML template
   const styledIndex = await embedcss.embedInHtml(
     __dirname + '/index.html',
     __dirname + '/stories.css.html'
   );
-  // Dynamically render the stories in the HTML template
-  const storiesIndex = styledIndex.replace('<!-- ::STORIES:: -->', storyHtml);  
   const pageHtml = createPagerFragment(topic, page);
-  return storiesIndex.replace('<!-- ::PAGER:: -->', pageHtml);
+  return styledIndex.replace('<!-- ::PAGER:: -->', pageHtml);
 }
 
 /**
@@ -97,8 +94,7 @@ async function createStoryPage(topic: string, page: string, stories: any[]) {
  */
 async function renderStories(path: string, page = "1") {
   const topic = topicLookup(path);
-  const stories = await getStories({ path, topic, page });
-  const allIndex = await createStoryPage(topic, page, stories);
+  const allIndex = await createStoryPage(topic, page, []);
 
   // minify html
   return minify(allIndex, {
@@ -176,7 +172,11 @@ app.get('/frag', async (req, res) => {
   let page = req.query.page || '1';
   const stories = await getStories({ topic, page })
   const html = await createStoryFragment(topic, page, stories);
-  res.send(html);
+  const min = minify(html, {
+    collapseWhitespace: true,
+    removeAttributeQuotes: true
+  });
+  res.send(min);
 });
 
 /**
