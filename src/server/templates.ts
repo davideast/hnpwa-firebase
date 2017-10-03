@@ -37,6 +37,9 @@ export const commentTree = `
       {{time_ago}} | {{comments_count}} comments
     </p>
   </div>
+  <div class="hn-c">
+    {{{content}}}
+  </div>
   {{> commentList comments }}
 </div>
 `;
