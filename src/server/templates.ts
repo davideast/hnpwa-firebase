@@ -29,7 +29,7 @@ export const story = `
 
 export const commentTree = `
 <div>
-  <h2>{{title}} ({{domain}})</h2>
+  <h2>{{title}} {{#if domain}}({{domain}}){{/if}}</h2>
   <div>
     <p class="hn-fl">
       {{points}} points by
@@ -42,6 +42,18 @@ export const commentTree = `
   </div>
   {{> commentList comments }}
 </div>
+<script>
+  const found = document.querySelectorAll('.hn-c .hn-ch');
+  for (let i = 0, len = found.length; i < len; i++) {
+    found[i].addEventListener('click', function(e) {
+      if (e.target.classList.contains('hidden')) {
+        e.target.classList.remove('hidden');
+      } else {
+        e.target.classList.add('hidden');
+      }
+    });
+  }
+</script>
 `;
 
 export const commentList = `
@@ -49,17 +61,16 @@ export const commentList = `
     {{#each this}}
       <div class="hn-ct">
         <div class="hn-c">
-          <div>
-            <a href="/user/{{user}}">
-              {{ user }} | {{ time_ago }}
-            </a>
+          <div class="hn-ch">
+            <a href="/user/{{user}}">{{ user }}</a>
+            {{ time_ago }}
           </div>
-          <div>
+          <div class="hn-cb">
             {{{ content }}}
+
+            {{> commentList comments }}
           </div>
         </div>
-        
-        {{> commentList comments }}
 
       </div>
     {{/each}}
