@@ -7,18 +7,28 @@
 }
 
 .hn-c {
-    border-bottom: 1px solid rgba(239, 239, 239, .8);
-    padding: 1rem 0;
+    padding: 1rem 0 0;
     font-size: 1rem;
 }
 .hn-cl .hn-cl {
     margin-left: .5rem
 }
-.hn-cl p {
+.hn-c p,
+.hn-ch {
     margin-bottom: .8rem;
     word-break: break-word;
 }
 .hn-ct {
-    padding: .4rem
+    padding-left: .5rem
 }
 
+.hn-c .hn-ch::before {
+    content: '[-] ';
+    cursor: pointer;
+}
+.hn-c .hidden.hn-ch::before {
+    content: '[+] ';
+}
+.hn-c .hidden.hn-ch ~ .hn-cb {
+    display:none;
+}
