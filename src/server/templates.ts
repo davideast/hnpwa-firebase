@@ -1,5 +1,7 @@
+// This is for syntax highlighting in VSCode
+const html = String.raw;
 
-export const story = `
+export const story = html`
 <section>
   <div class="hn-sr">
     <h2>{{rank}}</h2>
@@ -27,7 +29,7 @@ export const story = `
 </section>
 `;
 
-export const commentTree = `
+export const commentTree = html`
 <div>
   <h2>{{title}} ({{domain}})</h2>
   <div>
@@ -41,7 +43,7 @@ export const commentTree = `
 </div>
 `;
 
-export const commentList = `
+export const commentList = html`
   <div class="hn-cl">
     {{#each this}}
       <div class="hn-ct">
@@ -63,7 +65,7 @@ export const commentList = `
   </div>
 `;
 
-export const pager = `
+export const pager = html`
 <div class="hn-p">
   {{#if nextPositive}}
   <a href="/{{topic}}?page={{back}}">back</a>
