@@ -11,7 +11,7 @@ const minify = htmlmin.minify;
 export const app = express.Router();
 Handlebars.registerPartial('commentList', templates.commentList);
 
-const API_BASE = process.env['API_BASE'] || 'https://hnpwa.com/api/v0';
+const API_BASE = process.env['API_BASE'] || 'https://api.hnpwa.com/v0';
 const SECTION_MATCHER = /^\/$|news|newest|show|ask|jobs/;
 const ITEM_MATCHER = /item\/(\d+$)/;
 
@@ -47,9 +47,9 @@ async function getStories(opts: { path: string, topic: string, page: string}) {
   let storiesJson;
   // No page lookup is required if it is the root page
   if(path === '/') {
-    storiesJson = await request(`${API_BASE}/news.json`);
+    storiesJson = await request(`${API_BASE}/news/1.json`);
   } else {
-    storiesJson = await request(`${API_BASE}/${topic}.json?page=${page}`);
+    storiesJson = await request(`${API_BASE}/${topic}/${page}.json`);
   }
   return JSON.parse(storiesJson);
 }
