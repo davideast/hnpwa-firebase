@@ -1,5 +1,5 @@
 .hn-sl > section {
-   border-bottom: 1px solid rgba(239, 239, 239, .8);        
+   border-bottom: 1px solid rgba(239, 239, 239, .8);
    display: flex;
    padding: 1rem 0;
 }
@@ -39,5 +39,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1.1rem;
+    padding: 15px 1.1rem;
+    position: sticky;
+    top: 0;
+    background-color: rgb(255, 255, 255);
 }
