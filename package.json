@@ -28,13 +28,14 @@
     "firebase-tools": "^3.9.1",
     "hnpwa-api": "^0.1.5",
     "lighthouse": "^2.1.0",
-    "lighthouse-ci": "https://github.com/ebidel/lighthouse-ci"
+    "lighthouse-ci": "https://github.com/ebidel/lighthouse-ci",
+    "rimraf": "^3.0.0"
   },
   "scripts": {
     "test": "echo \"lol tests\" && exit 0",
     "tsc": "node_modules/.bin/tsc -p src/server/tsconfig.json && node_modules/.bin/tsc -p src/build/tsconfig.json",
     "tsc:watch": "node_modules/.bin/tsc -p src/server/tsconfig.json -w",
-    "build:clean": "rm -rf dist",
+    "build:clean": "rimraf dist",
     "build": "npm run build:clean && npm run tsc && node dist/build/build.js",
     "serve": "npm run tsc && API_BASE=https://hnpwa.com/api/v0 node dist/build/offline.server",
     "serve:firebase": "npm run tsc && firebase serve --only functions,hosting",
