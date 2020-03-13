@@ -82,7 +82,7 @@ async function createStoryPage(topic: string, page: string, stories: any[]) {
   const storiesIndex = styledIndex.replace('<!-- ::STORIES:: -->', storyHtml);  
   const { next, back, nextPositive, current, maxedOut } = getPagerOptions(topic, page);
   const pageHtml = pagerTemplate({ topic, next, back, nextPositive, current, maxedOut });
-  return storiesIndex.replace('<!-- ::PAGER:: -->', pageHtml);
+  return storiesIndex.replace(/<!-- ::PAGER:: -->/g, pageHtml);
 }
 
 /**
