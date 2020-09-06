@@ -11,7 +11,7 @@
     "firebase-admin": "^4.2.1",
     "firebase-functions": "^0.5.9",
     "fs-extra": "^4.0.0",
-    "handlebars": "^4.0.10",
+    "handlebars": "^4.5.3",
     "html-minifier": "^3.5.2",
     "ncp": "^2.0.0",
     "request-promise": "^4.2.1",
